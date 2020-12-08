@@ -1,6 +1,4 @@
-clc
-clear all
-close all
+clear;clc;close all
 
 m_aircraft = 1600;              % kg; mass of aircraft without fuel & equipment
 eff_actual_cycle = 0.430218;    % efficiency of actual cycle

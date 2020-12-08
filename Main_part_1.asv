@@ -1,0 +1,35 @@
+clc
+clear all
+close all
+
+m_aircraft = 1600;              % kg; mass of aircraft without fuel & equipment
+eff_actual_cycle = 0.430218;    % efficiency of actual cycle
+m_fuel = 450;                   % kg; mass of fuel
+H_ethane = 47484;               % kJ/kg; heating value for ethane
+g = 9.8;                        % m/s^2
+v = (150:350);                  % km/hr; cruising speed of drone
+rho_air = 1.007;                % kg/m^3; density of air at 2000 m altitude
+A = 30;                         % m^2; planform area of UAV wing
+
+load coefficients_chart
+alpha = coefficients_chart(:,1);   % selects every value in the column for angle of attack alpha
+C_L = coefficients_chart(:,2);     % selects every value in the column for coeff of lift
+C_D = coefficients_chart(:,3);     % selects every value in the column for coeff of drag
+
+Q_released = m_fuel*(H_ethane*1000);        % J; or kg*m^2/s^2; amount of energy from combustion
+
+lift = (m_fuel + m_aircraft)*g;             % Newtons; or kg*m/s^2
+
+for i = 1:length(v)
+    coeff_L(i) = (2*lift)/(rho_air*A*(v(i)/3.6).^(2));  % units cancel - checked;
+    alpha_actual(i) = interp1(C_L,alpha,coeff_L(i));    % degrees; corresponds to the alpha for the given C_L in the table
+    coeff_D(i) = interp1(alpha,C_D,alpha_actual(i));    % corresponds to the C_D for the given alpha in the table
+    drag(i) = 0.5*rho_air*A*(v(i)^2)*coeff_D(i);        % Newtons; or kg*m/s^2
+    range(i) = ((Q_released*eff_actual_cycle)./drag(i))/1000;  % kilometers 
+end
+
+plot(v,range)
+title('Drone Range w.r.t its Speed and Amount of Fuel')
+xlabel('Cruising Speed (km/hr)')
+ylabel('Range (km)')
+

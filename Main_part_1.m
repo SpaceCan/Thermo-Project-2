@@ -5,9 +5,9 @@ eff_actual_cycle = 0.430218;    % efficiency of actual cycle
 m_fuel = [200 400 600];         % kg; mass of fuel
 H_ethane = 47484;               % kJ/kg; heating value for ethane
 g = 9.8;                        % m/s^2
-v = (150:350);                  % km/hr; cruising speed of drone
+v = (250:450);                  % km/hr; cruising speed of drone
 rho_air = 1.007;                % kg/m^3; density of air at 2000 m altitude
-A = 30;                         % m^2; planform area of UAV wing
+A = 10;                         % m^2; planform area of UAV wing
 
 load coefficients_chart
 alpha = coefficients_chart(:,1);   % selects every value in the column for angle of attack alpha

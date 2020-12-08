@@ -19,9 +19,9 @@ carbon_atoms_propane = 3;        % # of carbon atoms in methanes chemical formul
 H = [H_ethane H_methane H_propane];
 M_mass_co2 = 44.0095;           % g/mol; molar mass of carbon dioxide
 g = 9.8;                        % m/s^2
-v = (150:350);                  % km/hr; cruising speed of drone
+v = (250:450);                  % km/hr; cruising speed of drone
 rho_air = 1.007;                % kg/m^3; density of air at 2000 m altitude
-A = 30;                         % m^2; planform area of UAV wing
+A = 10;                         % m^2; planform area of UAV wing
 
 load coefficients_chart
 alpha = coefficients_chart(:,1);   % selects every value in the column for angle of attack alpha

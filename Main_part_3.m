@@ -5,7 +5,7 @@ eff_actual_cycle = 0.430218;    % efficiency of actual cycle
 m_fuel = linspace(600,0,601);   % kg; mass of fuel as it is consumed
 H_ethane = 47484;               % kJ/kg; heating value for ethane
 g = 9.8;                        % m/s^2
-v = linspace(200,450,256);                  % km/hr; cruising speed of drone
+v = linspace(210,450,256);      % km/hr; cruising speed of drone
 rho_air = 1.007;                % kg/m^3; density of air at 2000 m altitude
 A = 10;                         % m^2; planform area of UAV wing
 
@@ -33,10 +33,9 @@ for i = 1:length(m_fuel)
         range(1,j) = range(1,j) + ((Q_released*eff_actual_cycle)./drag(1,j))/1000;  % kilometers
     end
 end
-
+%%
 hold on
 plot(v,range(1,:),'b')  %   plotted seperately only so i could choose the colors
-max(range)
 title('Drone Range w.r.t its Cruising Speed for non-const fuel mass')
 xlabel('Cruising Speed (km/hr)')
 ylabel('Range (km)')

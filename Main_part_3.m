@@ -33,7 +33,7 @@ for i = 1:length(m_fuel)
         range(1,j) = range(1,j) + ((Q_released*eff_actual_cycle)./drag(1,j))/1000;  % kilometers
     end
 end
-%%
+%% Plotting
 hold on
 plot(v,range(1,:),'b')  %   plotted seperately only so i could choose the colors
 title('Drone Range w.r.t its Cruising Speed for non-const fuel mass')

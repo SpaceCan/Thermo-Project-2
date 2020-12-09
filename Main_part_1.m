@@ -31,7 +31,7 @@ hold on
 plot(v,range(1,:),'b')  %   plotted seperately only so i could choose the colors
 plot(v,range(2,:),'r')  %   could be plotted easier with plot(v,range)
 plot(v,range(3,:),'g')
-title('Drone Range w.r.t its Cruising Speed and Amount of Fuel')
+% title('Drone Range w.r.t its Cruising Speed and Amount of Fuel')
 xlabel('Cruising Speed (km/hr)')
 ylabel('Range (km)')
 legend('200 kg','400 kg','600 kg')

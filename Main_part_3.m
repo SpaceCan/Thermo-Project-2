@@ -1,9 +1,15 @@
+%% Variable Declarations
 clear;clc;close all
 
 m_aircraft = 1600;              % kg; mass of aircraft without fuel & equipment (aka dry mass)
 eff_actual_cycle = 0.430218;    % efficiency of actual cycle
 m_fuel = linspace(600,0,601);   % kg; mass of fuel as it is consumed
+
 H_ethane = 47484;               % kJ/kg; heating value for ethane
+M_mass_ethane = 30.070;         % g/mol; molecular mass of ethane
+carbon_atoms_ethane = 2;        % # of carbon atoms in methanes chemical formula
+M_mass_co2 = 44.0095;           % g/mol; molar mass of carbon dioxide
+
 g = 9.8;                        % m/s^2
 v = linspace(210,450,256);      % km/hr; cruising speed of drone
 rho_air = 1.007;                % kg/m^3; density of air at 2000 m altitude
@@ -13,7 +19,7 @@ load coefficients_chart
 alpha = coefficients_chart(:,1);   % selects every value in the column for angle of attack alpha
 C_L = coefficients_chart(:,2);     % selects every value in the column for coeff of lift
 C_D = coefficients_chart(:,3);     % selects every value in the column for coeff of drag
-
+%% Range Calculation
 % Declaring variables before the loop to save memory
 range = zeros(1,length(v));
 drag = zeros(1,length(v));
@@ -21,7 +27,7 @@ coeff_D = zeros(1,length(v));
 alpha_actual = zeros(1,length(v));
 coeff_L = zeros(1,length(v));
 
-for i = 1:length(m_fuel)
+for i = 1:length(m_fuel) % Integrating fuel as it decreases
     Q_released = m_fuel(end-1)*(H_ethane*1000);        % J; or kg*m^2/s^2; amount of energy from combustion
     lift = (m_fuel(i) + m_aircraft)*g;             % Newtons; or kg*m/s^2
     
@@ -33,12 +39,23 @@ for i = 1:length(m_fuel)
         range(1,j) = range(1,j) + ((Q_released*eff_actual_cycle)./drag(1,j))/1000;  % kilometers
     end
 end
+%% Calulating CO2 usage vs range
+moles_ethane = max(m_fuel)*1000/M_mass_ethane;    %   calculates moles of ethane from max fuel
+moles_co2_ethane = moles_ethane*(carbon_atoms_ethane);   %  calculates moles of co2 using ratio
+emissions_ethane = (moles_co2_ethane*M_mass_co2)/1000;   %   kg; carbon dioxide emissions
+range_emissions = emissions_ethane./(range(1,:));    %   kg/km carbon emissions per kilometer vs cruising speed
+
 %% Plotting
 hold on
 plot(v,range(1,:),'b')  %   plotted seperately only so i could choose the colors
-title('Drone Range w.r.t its Cruising Speed for non-const fuel mass')
+%title('Drone Range w.r.t its Cruising Speed for non-const fuel mass')
 xlabel('Cruising Speed (km/hr)')
 ylabel('Range (km)')
 legend('600 kg')
 leg = legend('show');       %   adds a title to the legend
 title(leg,'Mass of Fuel')   %   adds a title to the legend
+
+figure
+plot(v,range_emissions)
+xlabel('Cruising Speed (km/hr)')
+ylabel('CO_2 emissions (kg/km)')

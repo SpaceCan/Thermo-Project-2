@@ -41,15 +41,15 @@ for i = 1:length(H)
     end
 end
 
-moles_ethane = m_fuel/M_mass_ethane;    %   calculates moles of ethane from given am't of fuel
+moles_ethane = m_fuel*1000/M_mass_ethane;    %   calculates moles of ethane from given am't of fuel
 moles_co2_ethane = moles_ethane*(carbon_atoms_ethane);   %  calculates moles of co2 using ratio
 emissions_ethane = (moles_co2_ethane*M_mass_co2)/1000;   %   kg; carbon dioxide emissions
 
-moles_methane = m_fuel/M_mass_methane;    %   calculates moles of methane from given am't of fuel
+moles_methane = m_fuel*1000/M_mass_methane;    %   calculates moles of methane from given am't of fuel
 moles_co2_methane = moles_methane*(carbon_atoms_methane);   %  calculates moles of co2 using ratio
 emissions_methane = (moles_co2_methane*M_mass_co2)/1000;   %   kg; carbon dioxide emissions
 
-moles_propane = m_fuel/M_mass_propane;    %   calculates moles of propane from given am't of fuel
+moles_propane = m_fuel*1000/M_mass_propane;    %   calculates moles of propane from given am't of fuel
 moles_co2_propane = moles_propane*(carbon_atoms_propane);   %  calculates moles of co2 using ratio
 emissions_propane = (moles_co2_propane*M_mass_co2)/1000;   %   kg; carbon dioxide emissions
 

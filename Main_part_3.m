@@ -46,16 +46,18 @@ emissions_ethane = (moles_co2_ethane*M_mass_co2)/1000;   %   kg; carbon dioxide 
 range_emissions = emissions_ethane./(range(1,:));    %   kg/km carbon emissions per kilometer vs cruising speed
 
 %% Plotting
-hold on
-plot(v,range(1,:),'b')  %   plotted seperately only so i could choose the colors
+figure('Units','inches','Position',[2 1 3.56 2.7].*1.5)
+plot(v,range(1,:),'Color','#EC0955','LineWidth',1.5)  %   plotted seperately only so i could choose the colors
 %title('Drone Range w.r.t its Cruising Speed for non-const fuel mass')
-xlabel('Cruising Speed (km/hr)')
-ylabel('Range (km)')
-legend('600 kg')
+xlabel('Cruising Speed $$\left[\frac{km}{hr}\right]$$','Interpreter','latex')
+ylabel('Range (km)','Interpreter','latex')
+legend('600 kg','Interpreter','latex')
 leg = legend('show');       %   adds a title to the legend
 title(leg,'Mass of Fuel')   %   adds a title to the legend
+print('Graph-3','-r300','-djpeg') % Auto-export figure1 at a crisp 300 dpi
 
-figure
-plot(v,range_emissions)
-xlabel('Cruising Speed (km/hr)')
-ylabel('CO_2 emissions (kg/km)')
+figure('Units','inches','Position',[2 1 3.56 2.7].*1.5)
+plot(v,range_emissions,':','Color','k','LineWidth',2)
+xlabel('Cruising Speed $$\left[\frac{km}{hr}\right]$$','Interpreter','latex')
+ylabel('$CO_{2}$ emissions $$\left[\frac{kg}{km}\right]$$','Interpreter','latex')
+print('Graph-4','-r300','-djpeg') % Auto-export figure2 at a crisp 300 dpi

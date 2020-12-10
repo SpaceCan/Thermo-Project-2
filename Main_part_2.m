@@ -1,3 +1,4 @@
+%% Declare Variables
 clc;clear;close all
 
 m_aircraft = 1600;              % kg; mass of aircraft without fuel & equipment
@@ -27,7 +28,7 @@ load coefficients_chart
 alpha = coefficients_chart(:,1);   % selects every value in the column for angle of attack alpha
 C_L = coefficients_chart(:,2);     % selects every value in the column for coeff of lift
 C_D = coefficients_chart(:,3);     % selects every value in the column for coeff of drag
-
+%% Calculate Ranges
 for i = 1:length(H)
     Q_released = m_fuel*(H(i)*1000);        % J; or kg*m^2/s^2; amount of energy from combustion
     lift = (m_fuel + m_aircraft)*g;             % Newtons; or kg*m/s^2
@@ -40,7 +41,7 @@ for i = 1:length(H)
         range(i,j) = ((Q_released*eff_actual_cycle)./drag(i,j))/1000;  % kilometers
     end
 end
-
+%% Calculating Emissions
 moles_ethane = m_fuel*1000/M_mass_ethane;    %   calculates moles of ethane from given am't of fuel
 moles_co2_ethane = moles_ethane*(carbon_atoms_ethane);   %  calculates moles of co2 using ratio
 emissions_ethane = (moles_co2_ethane*M_mass_co2)/1000;   %   kg; carbon dioxide emissions
@@ -53,13 +54,16 @@ moles_propane = m_fuel*1000/M_mass_propane;    %   calculates moles of propane f
 moles_co2_propane = moles_propane*(carbon_atoms_propane);   %  calculates moles of co2 using ratio
 emissions_propane = (moles_co2_propane*M_mass_co2)/1000;   %   kg; carbon dioxide emissions
 
+%% Plotting
+figure('Units','inches','Position',[2 1 3.56 2.7].*1.5)
 hold on
-plot(v,range(1,:),'b')  %   plotted seperately only so i could choose the colors
-plot(v,range(2,:),'r')  %   could be plotted easier with plot(v,range)
-plot(v,range(3,:),'g')
+plot(v,range(1,:),'Color','#F0A808','LineWidth',1.5)  %   plotted seperately only so i could choose the colors
+plot(v,range(2,:),'Color','#001275','LineWidth',1.5)  %   could be plotted easier with plot(v,range)
+plot(v,range(3,:),'Color','#EC0955','LineWidth',1.5)
 % title('UAV Range w.r.t its Cruising Speed and Fuel Type')
-xlabel('Cruising Speed (km/hr)')
-ylabel('Range (km)')
-legend('Ethane','Methane','Propane')
+xlabel('Cruising Speed $$\left[\frac{km}{hr}\right]$$','Interpreter','latex')
+ylabel('Range (km)','Interpreter','latex')
+legend('Ethane','Methane','Propane','Interpreter','latex')
 leg = legend('show');       %   adds a title to the legend
 title(leg,'Fuel Types')     %   adds a title to the legend
+print('Graph-2','-r300','-djpeg') % Auto-export figure1 at a crisp 300 dpi

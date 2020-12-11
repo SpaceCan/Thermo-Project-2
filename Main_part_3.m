@@ -5,9 +5,9 @@ m_aircraft = 1600;              % kg; mass of aircraft without fuel & equipment 
 eff_actual_cycle = 0.430218;    % efficiency of actual cycle
 m_fuel = linspace(600,0,601);   % kg; mass of fuel as it is consumed
 
-H_ethane = 47484;               % kJ/kg; heating value for ethane
-M_mass_ethane = 30.070;         % g/mol; molecular mass of ethane
-carbon_atoms_ethane = 2;        % # of carbon atoms in methanes chemical formula
+H_methane = 50010;              % kJ/kg; heating value for methane
+M_mass_methane = 16.043;        % g/mol; molecular mass of methane
+carbon_atoms_methane = 1;       % # of carbon atoms in methanes chemical formula
 M_mass_co2 = 44.0095;           % g/mol; molar mass of carbon dioxide
 
 g = 9.8;                        % m/s^2
@@ -28,7 +28,7 @@ alpha_actual = zeros(1,length(v));
 coeff_L = zeros(1,length(v));
 
 for i = 1:length(m_fuel) % Integrating fuel as it decreases
-    Q_released = m_fuel(end-1)*(H_ethane*1000);        % J; or kg*m^2/s^2; amount of energy from combustion
+    Q_released = m_fuel(end-1)*(H_methane*1000);        % J; or kg*m^2/s^2; amount of energy from combustion
     lift = (m_fuel(i) + m_aircraft)*g;             % Newtons; or kg*m/s^2
     
     for j = 1:length(v)
@@ -40,10 +40,10 @@ for i = 1:length(m_fuel) % Integrating fuel as it decreases
     end
 end
 %% Calulating CO2 usage vs range
-moles_ethane = max(m_fuel)*1000/M_mass_ethane;    %   calculates moles of ethane from max fuel
-moles_co2_ethane = moles_ethane*(carbon_atoms_ethane);   %  calculates moles of co2 using ratio
-emissions_ethane = (moles_co2_ethane*M_mass_co2)/1000;   %   kg; carbon dioxide emissions
-range_emissions = emissions_ethane./(range(1,:));    %   kg/km carbon emissions per kilometer vs cruising speed
+moles_ethane = max(m_fuel)*1000/M_mass_methane;    %   calculates moles of ethane from max fuel
+moles_co2_methane = moles_ethane*(carbon_atoms_methane);   %  calculates moles of co2 using ratio
+emissions_methane = (moles_co2_methane*M_mass_co2)/1000;   %   kg; carbon dioxide emissions
+range_emissions = emissions_methane./(range(1,:));    %   kg/km carbon emissions per kilometer vs cruising speed
 
 %% Plotting
 figure('Units','inches','Position',[2 1 3.56 2.7].*1.5)

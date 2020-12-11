@@ -57,13 +57,13 @@ emissions_propane = (moles_co2_propane*M_mass_co2)/1000;   %   kg; carbon dioxid
 %% Plotting
 figure('Units','inches','Position',[2 1 3.56 2.7].*1.5)
 hold on
-plot(v,range(1,:),'Color','#F0A808','LineWidth',1.5)  %   plotted seperately only so i could choose the colors
-plot(v,range(2,:),'Color','#001275','LineWidth',1.5)  %   could be plotted easier with plot(v,range)
-plot(v,range(3,:),'Color','#EC0955','LineWidth',1.5)
+plot(v,range(2,:),'Color','#001275','LineWidth',1.5,'DisplayName','Methane')  %   could be plotted easier with plot(v,range)
+plot(v,range(1,:),'Color','#F0A808','LineWidth',1.5,'DisplayName','Ethane')  %   plotted seperately only so i could choose the colors
+plot(v,range(3,:),'Color','#EC0955','LineWidth',1.5,'DisplayName','Propane')
 % title('UAV Range w.r.t its Cruising Speed and Fuel Type')
 xlabel('Cruising Speed $$\left[\frac{km}{hr}\right]$$','Interpreter','latex')
 ylabel('Range (km)','Interpreter','latex')
-legend('Ethane','Methane','Propane','Interpreter','latex')
+legend('Interpreter','latex')
 leg = legend('show');       %   adds a title to the legend
 title(leg,'Fuel Types')     %   adds a title to the legend
 print('Graph-2','-r300','-djpeg') % Auto-export figure1 at a crisp 300 dpi
